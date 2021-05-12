@@ -9,6 +9,6 @@ interface TokenInterface
 
     public function setOptions(array $options): void;
 
-    public function parseToken(string $token);
+    public function parseToken(string $token): array;
 
 }

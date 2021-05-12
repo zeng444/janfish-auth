@@ -11,7 +11,6 @@ class MyIdentity implements IdentityInterface
     {
         $right = false;
         if ($type === Auth::JWT_TYPE) {
-            print_r($data);
             $right = true;
         } elseif ($type === Auth::BASIC_TYPE) {
             if ($data['id'] === 'zeng444') {

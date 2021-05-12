@@ -78,7 +78,7 @@ class Jwt implements TokenInterface
      * @param string $token
      * @return array
      */
-    public function parseToken(string $token)
+    public function parseToken(string $token): array
     {
         try {
             $payload = \Firebase\JWT\JWT::decode($token, $this->_secret, [$this->_alg]);

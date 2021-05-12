@@ -33,7 +33,7 @@ class Basic implements TokenInterface
      * @param string $token
      * @return array
      */
-    public function parseToken(string $token)
+    public function parseToken(string $token): array
     {
         $token = base64_decode($token);
         if (!preg_match('/([^:]+):([^:]+)/', $token, $matched)) {

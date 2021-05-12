@@ -1,6 +1,6 @@
 ### 认证
 
-#### jwt
+#### JWT
 
 ```
 $auth = Janfish\Auth\Auth::getInstance([
@@ -22,7 +22,7 @@ print_r([
 ]);
 ```
 
-#### basic
+#### Basic
 
 ```
 $auth = Janfish\Auth\Auth::getInstance([
