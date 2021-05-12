@@ -3,7 +3,7 @@
     "description": "http auth",
     "require": {
         "php": ">=7.1.0",
-        "firebase/php-jwt": "dev-master"
+        "firebase/php-jwt": "^5.2"
     },
     "license": "MIT",
     "authors": [
