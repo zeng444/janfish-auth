@@ -1,0 +1,21 @@
+{
+    "name": "janfish/janfish-auth",
+    "description": "http auth",
+    "require": {
+        "php": ">=7.1.0",
+        "firebase/php-jwt": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robert",
+            "email": "zeng444@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Janfish\\Auth\\": "src/"
+        }
+    }
+}
