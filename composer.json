@@ -1,5 +1,5 @@
 {
-    "name": "janfish/janfish-auth",
+    "name": "janfish/auth",
     "description": "http auth",
     "require": {
         "php": ">=7.1.0",

@@ -2,17 +2,32 @@
 
 namespace Janfish\Auth\Token;
 
+use Firebase\JWT\ExpiredException;
+
+/**
+ * Class Jwt
+ * @package Janfish\Auth\Token
+ */
 class Jwt implements TokenInterface
 {
 
-    private $_data;
-    private $_alg;
-    private $_secret;
-    private $_expire;
-    private $_iss;
+    const DEFAULT_JWT_ALG = 'HS256';
+    const DEFAULT_ISS = 'Jwt Auth';
 
-    const DEFAULT_JWT_ALG = 'HS256'; //HASH_HMAC_SHA256
-    const DEFAULT_ISS = 'Jwt Auth'; //HASH_HMAC_SHA256
+    /**
+     * @var
+     */
+    private $_alg;
+
+    /**
+     * @var
+     */
+    private $_secret;
+
+    /**
+     * @var
+     */
+    private $_iss;
 
     /**
      * Author:Robert
@@ -28,28 +43,49 @@ class Jwt implements TokenInterface
         $this->_iss = $options['iss'] ?? self::DEFAULT_ISS;
         $this->_alg = $options['alg'] ?? self::DEFAULT_JWT_ALG;
         $this->_secret = $options['secret'];
-        $this->_expire = time() + ($options['expire'] ?? 86400);
-
     }
 
     /**
      * Author:Robert
      *
      * @param array $data
+     * @param int $expire
      * @return string
      */
-    public function generateToken(array $data): string
+    public function generateToken(array $data, int $expire): string
     {
+        $expire = time() + $expire;
         try {
             $token = [
                 'iss' => $this->_iss,
                 'iat' => time(),
-                'exp' => $this->_expire,
+                'exp' => $expire,
                 'data' => $data,
             ];
             return \Firebase\JWT\JWT::encode($token, $this->_secret, $this->_alg);
         } catch (\Exception $exception) {
             return '';
+        }
+    }
+
+    /**
+     * @param string $token
+     * @return array
+     * @throws \Janfish\Auth\Exception\ExpiredException
+     * @throws \Janfish\Auth\Exception\SignatureInvalidException
+     */
+    public function parseToken(string $token): array
+    {
+        try {
+            $payload = \Firebase\JWT\JWT::decode($token, $this->_secret, [$this->_alg]);
+            if (!$payload || !isset($payload->data)) {
+                return [];
+            }
+            return $this->object2array($payload->data);
+        } catch (ExpiredException $e) {
+            throw new \Janfish\Auth\Exception\ExpiredException('Expired token');
+        } catch (\Exception $e){
+            throw new \Janfish\Auth\Exception\SignatureInvalidException('Signature verification failed');
         }
     }
 
@@ -70,24 +106,5 @@ class Jwt implements TokenInterface
             }
         }
         return $array;
-    }
-
-    /**
-     * Author:Robert
-     *
-     * @param string $token
-     * @return array
-     */
-    public function parseToken(string $token): array
-    {
-        try {
-            $payload = \Firebase\JWT\JWT::decode($token, $this->_secret, [$this->_alg]);
-            if (!$payload || !isset($payload->data)) {
-                return [];
-            }
-            return $this->object2array($payload->data);
-        } catch (\Exception $exception) {
-            return [];
-        }
     }
 }

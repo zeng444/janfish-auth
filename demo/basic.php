@@ -4,7 +4,7 @@
 use Janfish\Auth\Auth;
 
 
-include dirname(__DIR__).'/vendor/autoload.php';
+include dirname(__DIR__) . '/vendor/autoload.php';
 include './MyIdentity.php';
 
 
@@ -18,7 +18,7 @@ $auth = Auth::getInstance([
 $token = $auth->generateToken('zeng444', 'password');
 
 if ($auth->authorize($token) === false) {
-    echo '失败';
+    echo '失败' . PHP_EOL;
     die();
 }
 print_r([

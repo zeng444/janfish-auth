@@ -2,6 +2,10 @@
 
 namespace Janfish\Auth\Token;
 
+/**
+ * Class Basic
+ * @package Janfish\Auth\Token
+ */
 class Basic implements TokenInterface
 {
 
@@ -20,11 +24,12 @@ class Basic implements TokenInterface
      * Author:Robert
      *
      * @param array $data
+     * @param int $expire
      * @return string
      */
-    public function generateToken(array $data): string
+    public function generateToken(array $data, int $expire): string
     {
-        return base64_encode($data['id'].':'.$data['ext']);
+        return base64_encode($data['id'] . ':' . $data['ext']);
     }
 
     /**

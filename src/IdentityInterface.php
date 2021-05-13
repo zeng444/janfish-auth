@@ -4,16 +4,14 @@ namespace Janfish\Auth;
 
 
 /**
- * Author:Robert
- *
- * Interface AuthedInterface
- * @package App\Http\Security
+ * Interface IdentityInterface
+ * @package Janfish\Auth
  */
 interface IdentityInterface
 {
 
 
-    public function login(array $data, string $type): AuthResult;
+    public function authenticate(array $data, string $type): AuthResult;
 
 
 }

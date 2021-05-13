@@ -7,7 +7,7 @@ use Janfish\Auth\IdentityInterface;
 class MyIdentity implements IdentityInterface
 {
 
-    public function login(array $data, string $type): AuthResult
+    public function authenticate(array $data, string $type): AuthResult
     {
         $right = false;
         if ($type === Auth::JWT_TYPE) {
