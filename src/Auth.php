@@ -113,9 +113,8 @@ class Auth
     }
 
     /**
-     * Author:Robert
-     *
-     * @return int|null
+     * @return string|null
+     * @author Robert
      */
     public function getIdentity(): ?string
     {
