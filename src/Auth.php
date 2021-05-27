@@ -2,8 +2,6 @@
 
 namespace Janfish\Auth;
 
-
-use Firebase\JWT\ExpiredException;
 use Janfish\Auth\Exception\InvalidArgumentException;
 
 /**
@@ -18,7 +16,7 @@ class Auth
     const JWT_TYPE = 'jwt';
     const BASIC_TYPE = 'basic';
     const AUTH_ALG_CLASS_MAP = [
-        self::JWT_TYPE => \Janfish\Auth\Token\Jwt::class,
+        self::JWT_TYPE   => \Janfish\Auth\Token\Jwt::class,
         self::BASIC_TYPE => \Janfish\Auth\Token\Basic::class,
     ];
     /**
@@ -64,13 +62,12 @@ class Auth
     }
 
     /**
-     * Author:Robert
-     *
      * @param array $options
-     * @return Auth
+     * @return static
      * @throws \Exception
+     * @author Robert
      */
-    public static function getInstance(array $options)
+    public static function getInstance(array $options): self
     {
         if (!self::$_self) {
             self::$_self = new self($options);
@@ -110,7 +107,7 @@ class Auth
     public function generateToken(string $id, $extends, int $expire = 86400): string
     {
         return $this->_instance->generateToken([
-            'id' => $id,
+            'id'  => $id,
             'ext' => $extends,
         ], $expire);
     }
@@ -122,6 +119,9 @@ class Auth
      */
     public function getIdentity(): ?string
     {
+        if (!$this->_authResult) {
+            return null;
+        }
         if (!$this->_authResult->isIdentity()) {
             return null;
         }
@@ -133,8 +133,11 @@ class Auth
      *
      * @return array
      */
-    public function getExtendedData()
+    public function getExtendedData(): array
     {
+        if (!$this->_authResult) {
+            return [];
+        }
         if (!$this->_authResult->isIdentity()) {
             return [];
         }
