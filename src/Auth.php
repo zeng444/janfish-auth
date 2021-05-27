@@ -113,6 +113,17 @@ class Auth
     }
 
     /**
+     * @author Robert
+     */
+    public function reset(): void
+    {
+        if (!$this->_authResult) {
+            $this->_authResult->setIdentity(null);
+            $this->_authResult->setExtendedData(null);
+        }
+    }
+
+    /**
      * @return string|null
      * @author Robert
      */

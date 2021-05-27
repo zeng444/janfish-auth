@@ -50,3 +50,14 @@ print_r([
     $auth->getExtendedData(),
 ]);
 ```
+
+
+#### Reset
+
+```
+$auth = Janfish\Auth\Auth::getInstance([
+    'class' => MyIdentity::class,
+    'type' => 'basic'
+]);
+$auth->reset();
+```
