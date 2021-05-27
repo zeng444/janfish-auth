@@ -117,9 +117,8 @@ class Auth
      */
     public function reset(): void
     {
-        if (!$this->_authResult) {
-            $this->_authResult->setIdentity(null);
-            $this->_authResult->setExtendedData(null);
+        if ($this->_authResult) {
+            $this->_authResult = null;
         }
     }
 
